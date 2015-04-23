@@ -1,0 +1,13 @@
+[
+  {
+    "name": "Point One"
+  },
+  {
+    "name": "Point Two",
+    "children": [
+      {
+        "name": "Point Two-One"
+      }
+    ]
+  }
+]
