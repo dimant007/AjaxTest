@@ -1,31 +1,16 @@
-function loadData() {
 
-    var xhr = new XMLHttpRequest();
 
-    xhr.open('GET', 'data/data.json', true);
+function loadData()
+{
+    var response;
+    $.getJSON('data/data.json')
+        .done(function(data){
+            response = data;
+        }).fail(function(){
 
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState != 4) return;
+        });
 
-        button.parentNode.removeChild(button);
-
-        if (xhr.status != 200) {
-            alert(xhr.status + ': ' + xhr.statusText);
-        } else {
-            try {
-                var data = JSON.parse(xhr.responseText);
-            } catch (e) {
-                alert("Incorrect answer " + e.message);
-            }
-            showData(data);
-        }
-
-    };
-
-    xhr.send();
-
-    button.innerHTML = 'Downloading...';
-    button.disabled = true;
+    return response;
 }
 
 function showData(data) {
