@@ -6,8 +6,10 @@ function loadData()
     $.getJSON('data/data.json')
         .done(function(data){
             response = data;
-        }).fail(function(){
 
+            showData(data);
+        }).fail(function(){
+            console.log( "error" );
         });
 
     return response;
@@ -16,8 +18,10 @@ function loadData()
 function showData(data) {
 
     data.forEach(function(dat) {
+
         var li = list.appendChild(document.createElement('li'));
         li.innerHTML = dat.name;
+
     });
 
 }
