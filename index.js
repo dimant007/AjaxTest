@@ -1,27 +1,35 @@
+function buildTree(data, hidden) {
+    var $root = $("<ul></ul>");
 
+    if (hidden) {
+        $root.addClass('hide');
+    }
 
-function loadData()
-{
-    var response;
-    $.getJSON('data/data.json')
-        .done(function(data){
-            response = data;
+    for (var i = 0; i < data.length; i++ ) {
+        var $elem = $("<li></li>");
 
-            showData(data);
-        }).fail(function(){
-            console.log( "error" );
-        });
+        if (data[i].children && data[i].children.length) {
+            $span = $("<span></span>").addClass("plus").text(data[i].name);
+            $elem.html($span).append(buildTree(data[i].children, true));
+        } else {
+            $elem.text(data[i].name);
+        }
 
-    return response;
+        $root.append($elem);
+    }
+
+    return $root;
 }
 
-function showData(data) {
+var $tree = $("#tree");
 
-    data.forEach(function(dat) {
+$("#treeBuilder").click(function(){
+    $.getJSON('data.json', function(response){
+        $tree.html(buildTree(response, false));
+    })
+});
 
-        var li = list.appendChild(document.createElement('li'));
-        li.innerHTML = dat.name;
-
+$tree
+    .on("click", ".plus, .minus", function(){
+        $(this).toggleClass("plus").toggleClass("minus");
     });
-
-}
